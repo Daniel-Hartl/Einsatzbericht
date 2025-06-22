@@ -15,13 +15,18 @@ internal partial class TeamViewModel : ObservableObject
     private MissionReport report;
 
     [ObservableProperty]
-    private FirefighterProvider firefighterProvider = new FirefighterProvider();
+    private FirefighterProvider firefighterProvider = new ();
 
     [ObservableProperty]
     private ObservableCollection<Person> filteredPersons;
 
     [ObservableProperty]
     private string newFirefighterInput;
+
+    public TeamViewModel()
+    {
+        filteredPersons = [.. FirefighterProvider.Firefighters];
+    }
 
     [RelayCommand]
     private void RemoveFirefighter(Firefighter firefighter)

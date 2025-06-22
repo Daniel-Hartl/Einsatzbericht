@@ -21,7 +21,8 @@ public partial class Team : UserControl
     {
         if (sender is TextBox textBox)
         {
-            this.vm.FilteredPersons = [.. this.vm.FirefighterProvider.Firefighters.Where(x => x.ChipId.Contains(textBox.Text) || x.Name.Contains(textBox.Text))];
+            this.vm.FilteredPersons = [.. this.vm.FirefighterProvider.Firefighters.Where(x => x.ChipId.Contains(textBox.Text, StringComparison.OrdinalIgnoreCase)
+            || x.Name.Contains(textBox.Text, StringComparison.OrdinalIgnoreCase))];
         }
     }
 
@@ -45,6 +46,20 @@ public partial class Team : UserControl
 
             this.searchTb.Text = string.Empty;
             e.Handled = true;
+        }
+    }
+
+    private void NameClicked(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is DockPanel dp && dp.DataContext is Person pers)
+        {
+            this.vm.Report.Team.Add(new()
+            {
+                ChipId = pers.ChipId,
+                Name = pers.Name,
+            });
+
+            this.searchTb.Text = string.Empty;
         }
     }
 }
