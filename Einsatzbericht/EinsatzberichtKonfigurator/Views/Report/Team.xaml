@@ -4,12 +4,95 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EinsatzberichtKonfigurator.Views.Report"
+             xmlns:enums="clr-namespace:Model.enums;assembly=Model"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" PreviewKeyDown="OnKeyDown">
     <UserControl.DataContext>
         <local:TeamViewModel x:Name="vm"/>
     </UserControl.DataContext>
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding Report.Team}" AutoGenerateColumns="False"
+              CanUserAddRows="False" CanUserReorderColumns="False"
+              HorizontalAlignment="Center" Grid.Column="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"
+                                IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="42/1">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <RadioButton IsChecked="{Binding
+                                         Converter={StaticResource vehicleConverter},
+                                         Mode=OneWay,
+                                         ConverterParameter={x:Static enums:Vehicle.HLF}}"
+                                         GroupName="{Binding ChipId}"
+                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                         Path=DataContext.SetHlfCommand}"
+                                         CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="14/1">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <RadioButton IsChecked="{Binding 
+                                         Converter={StaticResource vehicleConverter},
+                                         Mode=OneWay,
+                                         ConverterParameter={x:Static enums:Vehicle.MTW}}"
+                                         GroupName="{Binding ChipId}"
+                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                         Path=DataContext.SetMtwCommand}"
+                                         CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="privat">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <RadioButton IsChecked="{Binding
+                                         Converter={StaticResource vehicleConverter},
+                                         Mode=OneWay,
+                                         ConverterParameter={x:Static enums:Vehicle.privVehicle}}"
+                                         GroupName="{Binding ChipId}"
+                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                         Path=DataContext.SetPrivateCommand}"
+                                         CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="PA Nr." Binding="{Binding PaNr}"/>
+                <DataGridTextColumn Header="Min unter PA" Binding="{Binding PaTime}"/>
+                <DataGridTextColumn Header="Bemerkung" Binding="{Binding Comment}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="X" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}},
+                                     Path=DataContext.RemoveFirefighterCommand}"
+                                    CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Column="2" Margin="5 0 0 0">
+            <TextBox Text="{Binding NewFirefighterInput}" TextChanged="SearchBoxChanged"
+                     x:Name="searchTb"/>
+            <ItemsControl ItemsSource="{Binding FilteredPersons}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel>
+                            <Label Content="{Binding ChipId}"/>
+                            <Label Content="{Binding Name}"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+        </StackPanel>
     </Grid>
 </UserControl>

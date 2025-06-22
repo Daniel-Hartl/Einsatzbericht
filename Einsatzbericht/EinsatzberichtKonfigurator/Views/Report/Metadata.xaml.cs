@@ -9,6 +9,8 @@ using System.Windows.Input;
 /// </summary>
 public partial class Metadata : UserControl
 {
+    private List<Key> log = [];
+
     public Metadata(MissionReport missionReport)
     {
         InitializeComponent();

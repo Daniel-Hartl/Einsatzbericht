@@ -2,23 +2,18 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using Model.enums;
+using Model.MasterData;
 
-public partial class Firefighter: ObservableObject
+public partial class Firefighter : Person
 {
     [ObservableProperty]
-    private string chipId;
-
-    [ObservableProperty]
-    private string name;
-
-    [ObservableProperty]    
-    private Vehicle vehicle;
+    private Vehicle? vehicle;
 
     [ObservableProperty]
     private string? paNr;
 
     [ObservableProperty]
-    private TimeSpan? paTime;
+    private int paTime;
 
     [ObservableProperty]
     private string comment;

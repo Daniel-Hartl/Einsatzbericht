@@ -4,11 +4,12 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Automation;
 using System.Windows.Data;
 
 namespace EinsatzberichtKonfigurator.Classes
 {
-    [ValueConversion(typeof(double), typeof(double))]
+    [ValueConversion(typeof(double), typeof(double), ParameterType = typeof(double))]
     internal class LenghtSubstractionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

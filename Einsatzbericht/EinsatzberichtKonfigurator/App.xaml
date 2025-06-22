@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:EinsatzberichtKonfigurator"
              xmlns:classes="clr-namespace:EinsatzberichtKonfigurator.Classes"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,6 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
             <classes:BoolInverterConverter x:Key="boolInverter"/>
             <classes:LenghtSubstractionConverter x:Key="calc"/>
+            <classes:RadioButtonToVehicleConverter x:Key="vehicleConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
